@@ -26,7 +26,7 @@ class Host implements Rule
             $request->getUri()->getHost(),
             $matches
         );
-        
+
         if (!$match) {
             return false;
         }
@@ -37,7 +37,7 @@ class Host implements Rule
     private function buildRegex(Route $route)
     {
         $regex = str_replace('.', '\\.', $route->host());
-        $regex = '#^'. $regex . '$#';
+        $regex = '#^'.$regex.'$#';
 
         return $regex;
     }

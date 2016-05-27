@@ -16,6 +16,7 @@ class RuleCollection implements \Iterator
 
     /**
      * RuleIterator constructor.
+     *
      * @param array $rules
      */
     public function __construct(array $rules = [])
@@ -43,9 +44,10 @@ class RuleCollection implements \Iterator
         $rule    = $factory();
         if ($rule instanceof Rule) {
             $this->rules[$key] = $rule;
+
             return $rule;
         }
-        
+
         throw new \UnexpectedValueException(
             sprintf(
                 'Expected RuleInterface, got %s for key %s',

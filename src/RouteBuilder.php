@@ -12,7 +12,7 @@ namespace Stack\Routing;
 
 /**
  * Helper to create and configure a Route.
- * 
+ *
  * @author Andrzej Kostrzewa <andkos11@gmail.com>
  */
 final class RouteBuilder
@@ -222,12 +222,12 @@ final class RouteBuilder
      */
     public function route($name, $path, $requirements = [], $handler = null, $allows = [])
     {
-        $routeBuilder = clone $this;
-        $routeBuilder->name = $routeBuilder->namePrefix . $name;
-        $routeBuilder->path = rtrim($routeBuilder->pathPrefix, '/') . $path;
+        $routeBuilder               = clone $this;
+        $routeBuilder->name         = $routeBuilder->namePrefix.$name;
+        $routeBuilder->path         = rtrim($routeBuilder->pathPrefix, '/').$path;
         $routeBuilder->requirements = $requirements;
-        $routeBuilder->handler = $handler;
-        $routeBuilder->allows = (array) $allows;
+        $routeBuilder->handler      = $handler;
+        $routeBuilder->allows       = (array) $allows;
 
         return $routeBuilder->build();
     }
@@ -357,7 +357,7 @@ final class RouteBuilder
      */
     public function name($name)
     {
-        $this->name = $this->namePrefix . $name;
+        $this->name = $this->namePrefix.$name;
 
         return $this;
     }
@@ -385,7 +385,7 @@ final class RouteBuilder
      */
     public function path($path)
     {
-        $this->path = $this->pathPrefix . $path;
+        $this->path = $this->pathPrefix.$path;
 
         return $this;
     }
@@ -472,10 +472,11 @@ final class RouteBuilder
 
     /**
      * Init from existing route.
-     * 
+     *
      * @param Route $route
      */
-    private function init(Route $route) {
+    private function init(Route $route)
+    {
         $this->name($route->name())
             ->path($route->path())
             ->handler($route->handler())

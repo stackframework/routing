@@ -24,9 +24,9 @@ class Exception extends \Exception
      * @param $class
      * @param $route
      *
-     * @return Exception\RuleNotAllowed
-     *
      * @throws Exception\RuleNotAllowed
+     *
+     * @return Exception\RuleNotAllowed
      */
     public static function RuleNotAllowed($path, $class, $route)
     {
@@ -45,9 +45,9 @@ class Exception extends \Exception
      *
      * @param $path
      *
-     * @return Exception\ResourceNotFound
-     *
      * @throws Exception\ResourceNotFound
+     *
+     * @return Exception\ResourceNotFound
      */
     public static function ResourceNotFound($path)
     {
