@@ -37,7 +37,7 @@ final class UrlMatcher implements Matcher
      * UrlMatcher constructor.
      *
      * @param RouteCollection $routes
-     * @param RuleCollection $ruleCollection
+     * @param RuleCollection  $ruleCollection
      */
     public function __construct(RouteCollection $routes, RuleCollection $ruleCollection)
     {
@@ -64,11 +64,11 @@ final class UrlMatcher implements Matcher
      * Match a request to a route.
      *
      * @param ServerRequestInterface $request
-     * @param Route $prototype
-     *
-     * @return Route|void
+     * @param Route                  $prototype
      *
      * @throws Exception\RuleNotAllowed
+     *
+     * @return Route|void
      */
     private function matchRoute(ServerRequestInterface $request, Route $prototype)
     {
@@ -85,17 +85,17 @@ final class UrlMatcher implements Matcher
      * Does the request match a route per the matching rules?
      *
      * @param ServerRequestInterface $request
-     * @param Route $route
-     *
-     * @return Route
+     * @param Route                  $route
      *
      * @throws Exception\RuleNotAllowed
+     *
+     * @return Route
      */
     private function applyRules(ServerRequestInterface $request, Route $route)
     {
         foreach ($this->ruleCollection as $rule) {
             if (!$rule($request, $route)) {
-                 throw Exception::RuleNotAllowed(
+                throw Exception::RuleNotAllowed(
                     $request->getUri()->getPath(),
                     get_class($rule),
                     $route->name()

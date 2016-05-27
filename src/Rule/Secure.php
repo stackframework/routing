@@ -15,7 +15,6 @@ use Stack\Routing\Route;
 
 class Secure implements Rule
 {
-
     public function __invoke(ServerRequestInterface $request, Route $route)
     {
         if ($route->secure() === null) {

@@ -23,12 +23,12 @@ interface Matcher
 {
     /**
      * Tries to match a URL path with a set of routes.
-     * 
+     *
      * @param ServerRequestInterface $request
-     * 
-     * @return Route
-     * 
+     *
      * @throws Exception\ResourceNotFound
+     *
+     * @return Route
      */
     public function match(ServerRequestInterface $request);
 }

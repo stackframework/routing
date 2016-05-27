@@ -33,11 +33,11 @@ class Accepts implements Rule
     private function match($type, $header)
     {
         list($type, $subType) = explode('/', $type);
-        
+
         $type                 = preg_quote($type);
         $subType              = preg_quote($subType);
         $regex                = "#$type/($subType|\*)(;q=(\d\.\d))?#";
-        
+
         $match                = preg_match($regex, $header, $matches);
         if (!$match) {
             return false;

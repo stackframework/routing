@@ -21,6 +21,7 @@ class Path implements Rule
 
     /**
      * Path constructor.
+     *
      * @param $basePath
      */
     public function __construct($basePath = null)
@@ -45,9 +46,9 @@ class Path implements Rule
 
     private function buildRegex(Route $route)
     {
-        $this->regex = $this->basePath . $route->path();
+        $this->regex = $this->basePath.$route->path();
         $this->regex = $this->withWildcardRegex($route);
-        $this->regex = '#^' . $this->regex . '$#';
+        $this->regex = '#^'.$this->regex.'$#';
 
         return $this->regex;
     }
@@ -59,6 +60,6 @@ class Path implements Rule
         }
 
         return rtrim($this->regex, '/')
-            . "(/(?P<{$route->wildcard()}>.*))?";
+            ."(/(?P<{$route->wildcard()}>.*))?";
     }
 }

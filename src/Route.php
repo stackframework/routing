@@ -85,19 +85,19 @@ final class Route implements \Serializable
     /**
      * Route constructor.
      *
-     * @param string $name
-     * @param string $path
-     * @param mixed $handler
-     * @param array $defaults
-     * @param array $requirements
-     * @param string $host
-     * @param array $accepts
-     * @param array $allows
-     * @param array $attributes
+     * @param string      $name
+     * @param string      $path
+     * @param mixed       $handler
+     * @param array       $defaults
+     * @param array       $requirements
+     * @param string      $host
+     * @param array       $accepts
+     * @param array       $allows
+     * @param array       $attributes
      * @param null|string $auth
      * @param null|string $wildcard
      * @param null|string $secure
-     * @param bool $isRoutable 
+     * @param bool        $isRoutable
      */
     public function __construct(
         $name,
@@ -112,22 +112,22 @@ final class Route implements \Serializable
         $auth = null,
         $secure = null,
         $wildcard = null,
-        $isRoutable = true        
+        $isRoutable = true
     ) {
-        $this->name = $name;
-        $this->path = $path;
+        $this->name    = $name;
+        $this->path    = $path;
         $this->handler = $handler;
 
-        $this->defaults = $defaults;
+        $this->defaults     = $defaults;
         $this->requirements = $requirements;
-        $this->host = $host;
-        $this->accepts = $accepts;
-        $this->allows = $allows;
-        $this->attributes = $attributes;
-        $this->auth = $auth;
-        $this->secure = $secure;
-        $this->wildcard = $wildcard;
-        $this->isRoutable = $isRoutable;        
+        $this->host         = $host;
+        $this->accepts      = $accepts;
+        $this->allows       = $allows;
+        $this->attributes   = $attributes;
+        $this->auth         = $auth;
+        $this->secure       = $secure;
+        $this->wildcard     = $wildcard;
+        $this->isRoutable   = $isRoutable;
     }
 
     /**
@@ -243,7 +243,7 @@ final class Route implements \Serializable
 
     /**
      * Return true if this route respond on secure protocol.
-     * 
+     *
      * @return null|bool
      */
     public function secure()
@@ -288,7 +288,7 @@ final class Route implements \Serializable
      */
     public function unserialize($serialized)
     {
-        $data = unserialize($serialized);
+        $data               = unserialize($serialized);
         $this->name         = $data['name'];
         $this->path         = $data['path'];
         $this->host         = $data['host'];
