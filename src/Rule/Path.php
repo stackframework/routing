@@ -8,31 +8,47 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Stack\Routing\Rule;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Stack\Routing\Route;
 
+/**
+ * A rule for the URL path.
+ *
+ * @author Andrzej Kostrzewa <andkos11@gmail.com>
+ */
 class Path implements Rule
 {
-    private $basePath;
-
-    private $regex;
+    /**
+     * @var string|null
+     */
+    private static $basePath;
 
     /**
      * Path constructor.
      *
-     * @param $basePath
+     * @param string $basePath
      */
-    public function __construct($basePath = null)
+    public function __construct(string $basePath = null)
     {
-        $this->basePath = $basePath;
+        self::$basePath = $basePath;
     }
 
-    public function __invoke(ServerRequestInterface $request, Route $route)
+    /**
+     * Checks that the Request path matches the Route path.
+     *
+     * @param ServerRequestInterface $request
+     * @param Route                  $route
+     *
+     * @return bool
+     */
+    public function __invoke(ServerRequestInterface $request, Route $route) : bool
     {
         $match = preg_match(
-            $this->buildRegex($route),
+            self::buildRegexOfRoute($route),
             $request->getUri()->getHost(),
             $matches
         );
@@ -44,22 +60,37 @@ class Path implements Rule
         return true;
     }
 
-    private function buildRegex(Route $route)
+    /**
+     * Builds the regular expression for the route path.
+     *
+     * @param Route $route
+     *
+     * @return string
+     */
+    private static function buildRegexOfRoute(Route $route) : string
     {
-        $this->regex = $this->basePath.$route->path();
-        $this->regex = $this->withWildcardRegex($route);
-        $this->regex = '#^'.$this->regex.'$#';
+        $regex = self::$basePath.$route->path();
+        $regex = self::withWildcardRegex($regex, $route);
+        $regex = '#^'.$regex.'$#';
 
-        return $this->regex;
+        return $regex;
     }
 
-    private function withWildcardRegex(Route $route)
+    /**
+     * Adds a wildcard subpattern to the end of the regex.
+     *
+     * @param string $regex
+     * @param Route $route
+     *
+     * @return string
+     */
+    private static function withWildcardRegex(string $regex, Route $route) : string
     {
         if (!$route->wildcard()) {
-            return;
+            return $regex;
         }
 
-        return rtrim($this->regex, '/')
+        return rtrim($regex, '/')
             ."(/(?P<{$route->wildcard()}>.*))?";
     }
 }

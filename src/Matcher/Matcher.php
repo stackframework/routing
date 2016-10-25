@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Stack\Routing\Matcher;
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -26,9 +28,8 @@ interface Matcher
      *
      * @param ServerRequestInterface $request
      *
-     * @throws Exception\ResourceNotFound
-     *
      * @return Route
+     * @throws Exception\ResourceNotFound
      */
-    public function match(ServerRequestInterface $request);
+    public function match(ServerRequestInterface $request) : Route;
 }

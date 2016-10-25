@@ -12,11 +12,6 @@ declare(strict_types=1);
 
 namespace Stack\Routing\Exception;
 
-/**
- * The rule was not allowed.
- *
- * @author Andrzej Kostrzewa <andkos11@gmail.com>
- */
-class RuleNotAllowed extends \Exception
+class RuleNotFound extends \UnexpectedValueException
 {
 }

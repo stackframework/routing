@@ -8,29 +8,49 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Stack\Routing\Rule;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Stack\Routing\Route;
 
+/**
+ * A rule for "Accept" headers.
+ *
+ * @author Andrzej Kostrzewa <andkos11@gmail.com>
+ */
 class Accepts implements Rule
 {
-    public function __invoke(ServerRequestInterface $request, Route $route)
+    /**
+     * Check that the request Accept headers match one Route accept value.
+     *
+     * @param ServerRequestInterface $request
+     * @param Route                  $route
+     *
+     * @return bool
+     */
+    public function __invoke(ServerRequestInterface $request, Route $route) : bool
     {
         $routeAccepts = $route->accepts();
-        if (!$routeAccepts) {
-            return true;
-        }
-
         $requestAccepts = $request->getHeader('Accept');
-        if (!$requestAccepts) {
+
+        if (!($routeAccepts || $requestAccepts)) {
             return true;
         }
 
         return $this->matches($routeAccepts, $requestAccepts);
     }
 
-    private function match($type, $header)
+    /**
+     * Is the Accept header a match?
+     *
+     * @param string $type
+     * @param string $header
+     *
+     * @return bool
+     */
+    private function match(string $type, string $header) : bool
     {
         list($type, $subType) = explode('/', $type);
 
@@ -50,7 +70,15 @@ class Accepts implements Rule
         return true;
     }
 
-    private function matches(array $routeAccepts, array $requestAccepts)
+    /**
+     * Does what the route accepts match what the request accepts?
+     *
+     * @param array $routeAccepts
+     * @param array $requestAccepts
+     *
+     * @return bool
+     */
+    private function matches(array $routeAccepts, array $requestAccepts) : bool
     {
         $requestAccepts = implode(';', $requestAccepts);
         if ($this->match('*/*', $requestAccepts)) {

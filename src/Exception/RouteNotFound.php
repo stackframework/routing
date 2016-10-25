@@ -13,10 +13,10 @@ declare(strict_types=1);
 namespace Stack\Routing\Exception;
 
 /**
- * The rule was not allowed.
+ * A route name was not found.
  *
  * @author Andrzej Kostrzewa <andkos11@gmail.com>
  */
-class RuleNotAllowed extends \Exception
+class RouteNotFound extends \Exception
 {
 }

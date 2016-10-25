@@ -8,21 +8,36 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Stack\Routing\Rule;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Stack\Routing\Route;
 
+/**
+ * A rule for the HTTP host.
+ *
+ * @author Andrzej Kostrzewa <andkos11@gmail.com>
+ */
 class Host implements Rule
 {
-    public function __invoke(ServerRequestInterface $request, Route $route)
+    /**
+     * Checks that the Request host matches the Route host.
+     *
+     * @param ServerRequestInterface $request
+     * @param Route                  $route
+     *
+     * @return bool
+     */
+    public function __invoke(ServerRequestInterface $request, Route $route) : bool
     {
         if (!$route->host()) {
             return true;
         }
 
         $match = preg_match(
-            $this->buildRegex($route),
+            self::buildRegexOfRoute($route),
             $request->getUri()->getHost(),
             $matches
         );
@@ -34,7 +49,14 @@ class Host implements Rule
         return true;
     }
 
-    private function buildRegex(Route $route)
+    /**
+     * Builds the regular expression for the route host.
+     *
+     * @param Route $route
+     *
+     * @return string
+     */
+    private static function buildRegexOfRoute(Route $route) : string
     {
         $regex = str_replace('.', '\\.', $route->host());
         $regex = '#^'.$regex.'$#';
