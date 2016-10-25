@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Stack\Routing;
 
@@ -134,9 +134,8 @@ final class Route implements \Serializable
         bool  $secure       = false,
         string $wildcard    = '',
         bool $isRoutable    = true
-    )
-    {
-        $route = new Route($name, $path, $handler);
+    ) {
+        $route               = new Route($name, $path, $handler);
         $route->defaults     = $defaults;
         $route->requirements = $requirements;
         $route->host         = $host;
