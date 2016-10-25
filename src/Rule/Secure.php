@@ -8,14 +8,29 @@
  * file that was distributed with this source code.
  */
 
+declare (strict_types = 1);
+
 namespace Stack\Routing\Rule;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Stack\Routing\Route;
 
+/**
+ * A rule for HTTPS/SSL/TLS.
+ *
+ * @author Andrzej Kostrzewa <andkos11@gmail.com>
+ */
 class Secure implements Rule
 {
-    public function __invoke(ServerRequestInterface $request, Route $route)
+    /**
+     * Checks that the Route `$secure` matches the corresponding server values.
+     *
+     * @param ServerRequestInterface $request
+     * @param Route                  $route
+     *
+     * @return bool
+     */
+    public function __invoke(ServerRequestInterface $request, Route $route) : bool
     {
         if ($route->secure() === null) {
             return true;
@@ -27,13 +42,27 @@ class Secure implements Rule
         return $route->secure() === $secure;
     }
 
-    private function https($server)
+    /**
+     * Is HTTPS on?
+     *
+     * @param array $server
+     *
+     * @return bool
+     */
+    private function https(array $server) : bool
     {
         return isset($server['HTTPS'])
             && $server['HTTPS'] === 'on';
     }
 
-    private function port443($server)
+    /**
+     * Is the request on port 443?
+     *
+     * @param array $server
+     *
+     * @return bool
+     */
+    private function port443(array $server) : bool
     {
         return isset($server['SERVER_PORT'])
             && $server['SERVER_PORT'] === 443;

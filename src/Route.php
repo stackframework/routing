@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+declare (strict_types = 1);
+
 namespace Stack\Routing;
 
 /**
@@ -33,9 +35,9 @@ final class Route implements \Serializable
     private $attributes = [];
 
     /**
-     * @var mixed
+     * @var array
      */
-    private $auth;
+    private $auth = [];
 
     /**
      * @var array
@@ -43,7 +45,7 @@ final class Route implements \Serializable
     private $defaults = [];
 
     /**
-     * @var mixed
+     * @var callable
      */
     private $handler;
 
@@ -73,61 +75,80 @@ final class Route implements \Serializable
     private $requirements = [];
 
     /**
-     * @var null|bool
+     * @var bool
      */
-    private $secure = null;
+    private $secure = false;
 
     /**
-     * @var null|string
+     * @var string
      */
-    private $wildcard = null;
+    private $wildcard;
 
     /**
      * Route constructor.
      *
-     * @param string      $name
-     * @param string      $path
-     * @param mixed       $handler
-     * @param array       $defaults
-     * @param array       $requirements
-     * @param string      $host
-     * @param array       $accepts
-     * @param array       $allows
-     * @param array       $attributes
-     * @param null|string $auth
-     * @param null|string $wildcard
-     * @param null|string $secure
-     * @param bool        $isRoutable
+     * @param string $name
+     * @param string $path
+     * @param mixed  $handler
      */
     public function __construct(
-        $name,
-        $path,
-        $handler = null,
-        array $defaults = [],
-        array $requirements = [],
-        $host = '',
-        array $accepts = [],
-        array $allows = [],
-        array $attributes = [],
-        $auth = null,
-        $secure = null,
-        $wildcard = null,
-        $isRoutable = true
+        string $name,
+        string $path,
+        callable $handler = null
     ) {
         $this->name    = $name;
         $this->path    = $path;
         $this->handler = $handler;
+    }
 
-        $this->defaults     = $defaults;
-        $this->requirements = $requirements;
-        $this->host         = $host;
-        $this->accepts      = $accepts;
-        $this->allows       = $allows;
-        $this->attributes   = $attributes;
-        $this->auth         = $auth;
-        $this->secure       = $secure;
-        $this->wildcard     = $wildcard;
-        $this->isRoutable   = $isRoutable;
+    /**
+     * Create Route with optional parameters
+     *
+     * @param string   $name
+     * @param string   $path
+     * @param callable $handler
+     * @param array    $defaults
+     * @param array    $requirements
+     * @param string   $host
+     * @param array    $accepts
+     * @param array    $allows
+     * @param array    $attributes
+     * @param array    $auth
+     * @param bool     $secure
+     * @param string   $wildcard
+     * @param bool     $isRoutable
+     *
+     * @return Route
+     */
+    public static function createWithOptional(
+        string $name,
+        string $path,
+        callable $handler   = null,
+        array $defaults     = [],
+        array $requirements = [],
+        string $host        = '',
+        array $accepts      = [],
+        array $allows       = [],
+        array $attributes   = [],
+        array $auth         = [],
+        bool  $secure       = false,
+        string $wildcard    = '',
+        bool $isRoutable    = true
+    )
+    {
+        $route = new Route($name, $path, $handler);
+        $route->defaults     = $defaults;
+        $route->requirements = $requirements;
+        $route->host         = $host;
+        $route->accepts      = $accepts;
+        $route->allows       = $allows;
+        $route->attributes   = $attributes;
+        $route->auth         = $auth;
+        $route->secure       = $secure;
+        $route->wildcard     = $wildcard;
+        $route->isRoutable   = $isRoutable;
+
+        return $route;
     }
 
     /**
@@ -135,7 +156,7 @@ final class Route implements \Serializable
      *
      * @return array
      */
-    public function accepts()
+    public function accepts() : array
     {
         return $this->accepts;
     }
@@ -145,7 +166,7 @@ final class Route implements \Serializable
      *
      * @return array
      */
-    public function allows()
+    public function allows() : array
     {
         return $this->allows;
     }
@@ -155,7 +176,7 @@ final class Route implements \Serializable
      *
      * @return array
      */
-    public function attributes()
+    public function attributes() : array
     {
         return $this->attributes;
     }
@@ -163,9 +184,9 @@ final class Route implements \Serializable
     /**
      * Returns the authentication/authorization values.
      *
-     * @return mixed
+     * @return array
      */
-    public function auth()
+    public function auth() : array
     {
         return $this->auth;
     }
@@ -175,7 +196,7 @@ final class Route implements \Serializable
      *
      * @return array
      */
-    public function defaults()
+    public function defaults() : array
     {
         return $this->defaults;
     }
@@ -183,9 +204,9 @@ final class Route implements \Serializable
     /**
      * Returns the handler of route.
      *
-     * @return mixed
+     * @return callable
      */
-    public function handler()
+    public function handler() : callable
     {
         return $this->handler;
     }
@@ -193,9 +214,9 @@ final class Route implements \Serializable
     /**
      * Returns the host of route.
      *
-     * @return mixed
+     * @return string
      */
-    public function host()
+    public function host() : string
     {
         return $this->host;
     }
@@ -206,7 +227,7 @@ final class Route implements \Serializable
      *
      * @return bool
      */
-    public function isRoutable()
+    public function isRoutable() : bool
     {
         return $this->isRoutable;
     }
@@ -216,7 +237,7 @@ final class Route implements \Serializable
      *
      * @return string
      */
-    public function name()
+    public function name() : string
     {
         return $this->name;
     }
@@ -226,7 +247,7 @@ final class Route implements \Serializable
      *
      * @return string
      */
-    public function path()
+    public function path() : string
     {
         return $this->path;
     }
@@ -236,7 +257,7 @@ final class Route implements \Serializable
      *
      * @return array
      */
-    public function requirements()
+    public function requirements() : array
     {
         return $this->requirements;
     }
@@ -244,9 +265,9 @@ final class Route implements \Serializable
     /**
      * Return true if this route respond on secure protocol.
      *
-     * @return null|bool
+     * @return bool
      */
-    public function secure()
+    public function secure() : bool
     {
         return $this->secure;
     }
@@ -254,9 +275,9 @@ final class Route implements \Serializable
     /**
      * Returns the wildcard name of route.
      *
-     * @return null
+     * @return string
      */
-    public function wildcard()
+    public function wildcard() : string
     {
         return $this->wildcard;
     }
@@ -264,7 +285,7 @@ final class Route implements \Serializable
     /**
      * {@inheritdoc}
      */
-    public function serialize()
+    public function serialize() : string
     {
         return serialize([
             'name'         => $this->name,

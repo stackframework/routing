@@ -7,18 +7,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 declare (strict_types = 1);
 
 namespace Stack\Routing\Exception;
 
 /**
- * The resource was not found.
- *
- * This exception should trigger an HTTP 404 response in your application code.
+ * A route name was not found.
  *
  * @author Andrzej Kostrzewa <andkos11@gmail.com>
  */
-class ResourceNotFound extends \RuntimeException
+class RouteNotFound extends \Exception
 {
 }

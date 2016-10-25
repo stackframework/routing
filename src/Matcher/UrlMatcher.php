@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+declare (strict_types = 1);
+
 namespace Stack\Routing\Matcher;
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -48,7 +50,7 @@ final class UrlMatcher implements Matcher
     /**
      * {@inheritdoc}
      */
-    public function match(ServerRequestInterface $request)
+    public function match(ServerRequestInterface $request) : Route
     {
         foreach ($this->routes as $name => $prototype) {
             $route = $this->matchRoute($request, $prototype);
@@ -66,9 +68,8 @@ final class UrlMatcher implements Matcher
      * @param ServerRequestInterface $request
      * @param Route                  $prototype
      *
-     * @throws Exception\RuleNotAllowed
-     *
      * @return Route|void
+     * @throws Exception\RuleNotAllowed
      */
     private function matchRoute(ServerRequestInterface $request, Route $prototype)
     {
@@ -87,11 +88,10 @@ final class UrlMatcher implements Matcher
      * @param ServerRequestInterface $request
      * @param Route                  $route
      *
-     * @throws Exception\RuleNotAllowed
-     *
      * @return Route
+     * @throws Exception\RuleNotAllowed
      */
-    private function applyRules(ServerRequestInterface $request, Route $route)
+    private function applyRules(ServerRequestInterface $request, Route $route) : Route
     {
         foreach ($this->ruleCollection as $rule) {
             if (!$rule($request, $route)) {

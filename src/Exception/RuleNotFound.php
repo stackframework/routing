@@ -12,13 +12,6 @@ declare (strict_types = 1);
 
 namespace Stack\Routing\Exception;
 
-/**
- * The resource was not found.
- *
- * This exception should trigger an HTTP 404 response in your application code.
- *
- * @author Andrzej Kostrzewa <andkos11@gmail.com>
- */
-class ResourceNotFound extends \RuntimeException
+class RuleNotFound extends \UnexpectedValueException
 {
 }
