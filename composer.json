@@ -1,25 +1,25 @@
 {
-    "name": "stackframework/routing",
-    "description": "Stack Routing Component",
-    "type": "library",
-    "require": {
-        "php": ">=7.0",
-        "psr/http-message": "~1.0"
-    },
-	"require-dev": {
-        "phpunit/phpunit": "~4.8"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Andrzej Kostrzewa",
-            "email": "andkos11@gmail.com"
-        }
-    ],
-	"autoload": {
-		"psr-4": {
-			"Stack\\Routing\\": "src/"
-		}
-    },
-    "minimum-stability": "dev"
+  "name": "stackframework/routing",
+  "description": "Stack Routing Component",
+  "type": "library",
+  "require": {
+    "php": ">=7.0",
+    "psr/http-message": "~1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.8"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andrzej Kostrzewa",
+      "email": "andkos11@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Stack\\Routing\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
 }
