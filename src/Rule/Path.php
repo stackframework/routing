@@ -49,7 +49,7 @@ class Path implements Rule
     {
         $match = preg_match(
             self::buildRegexOfRoute($route),
-            $request->getUri()->getHost(),
+            $request->getUri()->getPath(),
             $matches
         );
 
